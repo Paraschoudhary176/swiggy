@@ -1,0 +1,12 @@
+* {
+  border: 0;
+}
+
+.header {
+  display: flex;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+}
