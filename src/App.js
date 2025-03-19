@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Components/Header";
 import ResturantCard from "./Components/ResturantCard";
 
@@ -679,8 +679,36 @@ const App = () => {
     },
   ];
 
-  const restaurants =
+  const allRestaurants =
     resObj[0].card.card.gridElements.infoWithStyle.restaurants;
+
+  // State to manage the list of restaurants
+  const [restaurants, setRestaurants] = useState(allRestaurants);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Function to filter top-rated restaurants
+  const filterTopRated = () => {
+    const filteredRestaurants = allRestaurants.filter(
+      (res) => parseFloat(res.info.avgRatingString) > 4
+    );
+    setRestaurants(filteredRestaurants);
+  };
+
+  // Function to reset the filter and show all restaurants
+  const resetFilter = () => {
+    setRestaurants(allRestaurants);
+  };
+
+  // Function to handle search
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filteredRestaurants = allRestaurants.filter((res) =>
+      res.info.name.toLowerCase().includes(query)
+    );
+    setRestaurants(filteredRestaurants);
+  };
+
   return (
     <div
       style={{
@@ -688,6 +716,50 @@ const App = () => {
       }}
     >
       <Header />
+
+      {/* Search and Filter Section */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 20,
+        }}
+      >
+        {/* Search Input */}
+        <div style={{ border: "1px solid black", padding: 5 }}>
+          <input
+            placeholder="Search here"
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+        </div>
+
+        {/* Filter Button */}
+        <button
+          style={{
+            height: 30,
+            width: 200,
+            marginLeft: 10,
+          }}
+          onClick={filterTopRated}
+        >
+          Top Rated Restaurants
+        </button>
+
+        {/* Reset Filter Button */}
+        <button
+          style={{
+            height: 30,
+            width: 100,
+            marginLeft: 10,
+          }}
+          onClick={resetFilter}
+        >
+          Reset
+        </button>
+      </div>
+
+      {/* Restaurant Cards */}
       <div
         style={{
           display: "flex",
@@ -696,12 +768,13 @@ const App = () => {
       >
         {restaurants.map((restaurant) => (
           <ResturantCard
-            key={restaurant.info.id} // Use a unique key for each restaurant
+            key={restaurant.info.id}
             resName={restaurant.info.name}
             cusine={restaurant.info.cuisines.join(", ")}
             rating={restaurant.info.avgRatingString}
             deliveryTime={restaurant.info.sla.slaString}
             imageId={restaurant.info.cloudinaryImageId}
+            price={restaurant.info.costForTwo}
           />
         ))}
       </div>

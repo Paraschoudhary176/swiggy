@@ -1,7 +1,7 @@
 import React from "react";
 
 const ResturantCard = (props) => {
-  const { resName, cusine, rating, deliveryTime, imageId } = props;
+  const { resName, cusine, rating, deliveryTime, imageId, price } = props;
 
   return (
     <div
@@ -43,6 +43,9 @@ const ResturantCard = (props) => {
       </p>
       <p style={{ margin: "5px 0", fontSize: "14px", color: "gray" }}>
         ⏳ {deliveryTime}
+      </p>
+      <p style={{ margin: "5px 0", fontSize: "14px", color: "gray" }}>
+        💰Price: {price}
       </p>
     </div>
   );
