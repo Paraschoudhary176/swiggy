@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Components/Header";
 import ResturantCard from "./Components/ResturantCard";
 
@@ -682,6 +682,17 @@ const App = () => {
   const allRestaurants =
     resObj[0].card.card.gridElements.infoWithStyle.restaurants;
 
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
+  const fetchdata = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.99740&lng=79.00110&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING "
+    );
+    const json = await data.json();
+    console.log(json, "data =>>>");
+  };
   // State to manage the list of restaurants
   const [restaurants, setRestaurants] = useState(allRestaurants);
   const [searchQuery, setSearchQuery] = useState("");

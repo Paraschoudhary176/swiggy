@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Header = () => {
+  const [loginBtn, setLoginBtn] = useState(true);
+
   return (
     <div
       className="header"
@@ -41,6 +43,18 @@ const Header = () => {
           <li>Cart</li>
         </ul>
       </div>
+
+      {/* Login Button */}
+      <button
+        onClick={() => setLoginBtn(!loginBtn)}
+        style={{
+          height: 30,
+          width: 100,
+          marginLeft: 10,
+        }}
+      >
+        {loginBtn ? "Logged In" : "Logged Out"}
+      </button>
     </div>
   );
 };
