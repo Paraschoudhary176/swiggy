@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div>
       <User />
-      <UserClass />
+      <UserClass name="Paras" />
     </div>
   );
 };
