@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Components/Header";
 import ResturantCard from "./Components/ResturantCard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import About from "./Screens/About";
+import Contact from "./Screens/Contact";
+import Error from "./Screens/Error";
 
 const App = () => {
   const resObj = [
@@ -721,75 +725,72 @@ const App = () => {
   };
 
   return (
-    <div
-      style={{
-        margin: 10,
-      }}
-    >
-      <Header />
+    <BrowserRouter>
+      <div style={{ margin: 10 }}>
+        <Header />
 
-      {/* Search and Filter Section */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: 20,
-        }}
-      >
-        {/* Search Input */}
-        <div style={{ border: "1px solid black", padding: 5 }}>
-          <input
-            placeholder="Search here"
-            value={searchQuery}
-            onChange={handleSearch}
+        {/* Define Routes */}
+        <Routes>
+          <Route
+            path="/"
+            errorElement={<Error />}
+            element={
+              <>
+                {/* Search and Filter Section */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: 20,
+                  }}
+                >
+                  <div style={{ border: "1px solid black", padding: 5 }}>
+                    <input
+                      placeholder="Search here"
+                      value={searchQuery}
+                      onChange={handleSearch}
+                    />
+                  </div>
+                  <button
+                    style={{ height: 30, width: 200, marginLeft: 10 }}
+                    onClick={filterTopRated}
+                  >
+                    Top Rated Restaurants
+                  </button>
+                  <button
+                    style={{ height: 30, width: 100, marginLeft: 10 }}
+                    onClick={resetFilter}
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                {/* Restaurant Cards */}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {restaurants.map((restaurant) => (
+                    <ResturantCard
+                      key={restaurant.info.id}
+                      resName={restaurant.info.name}
+                      cusine={restaurant.info.cuisines.join(", ")}
+                      rating={restaurant.info.avgRatingString}
+                      deliveryTime={restaurant.info.sla.slaString}
+                      imageId={restaurant.info.cloudinaryImageId}
+                      price={restaurant.info.costForTwo}
+                    />
+                  ))}
+                </div>
+              </>
+            }
           />
-        </div>
-
-        {/* Filter Button */}
-        <button
-          style={{
-            height: 30,
-            width: 200,
-            marginLeft: 10,
-          }}
-          onClick={filterTopRated}
-        >
-          Top Rated Restaurants
-        </button>
-
-        {/* Reset Filter Button */}
-        <button
-          style={{
-            height: 30,
-            width: 100,
-            marginLeft: 10,
-          }}
-          onClick={resetFilter}
-        >
-          Reset
-        </button>
-      </div>
-
-      {/* Restaurant Cards */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-        }}
-      >
-        {restaurants.map((restaurant) => (
-          <ResturantCard
-            key={restaurant.info.id}
-            resName={restaurant.info.name}
-            cusine={restaurant.info.cuisines.join(", ")}
-            rating={restaurant.info.avgRatingString}
-            deliveryTime={restaurant.info.sla.slaString}
-            imageId={restaurant.info.cloudinaryImageId}
-            price={restaurant.info.costForTwo}
+          <Route path="/about" element={<About />} errorElement={<Error />} />
+          <Route
+            path="/contact"
+            element={<Contact />}
+            errorElement={<Error />}
           />
-        ))}
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState(true);
@@ -37,9 +38,21 @@ const Header = () => {
             fontWeight: "bold",
           }}
         >
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            Home
+          </Link>
+          <Link
+            to="/about"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            About Us
+          </Link>
+          <Link
+            to="/Contact"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            Contact Us
+          </Link>
           <li>Cart</li>
         </ul>
       </div>
